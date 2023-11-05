@@ -4,7 +4,7 @@ function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [ messageList, setMessageList ] = useState([]);
 
-  const sendMessage = async () => {
+  const send_message = async () => {
     if (currentMessage !== "") {
       const messageData = {
         room: room,
@@ -33,10 +33,11 @@ function Chat({ socket, username, room }) {
         <p>Live Chat</p>
       </div>
       <div className="chat-body">
-          {messageList.map((messageContent) => {
+          {messageList.map((messageContent, i) => {
             return (
               <div
                 className="message"
+                key={i}
                 id={username === messageContent.author ? "you" : "other"}
               >
                 <div>
@@ -60,11 +61,11 @@ function Chat({ socket, username, room }) {
           onChange={(event) => {
             setCurrentMessage(event.target.value);
           }}
-          onKeyPress={(event) => {
-            event.key === "Enter" && sendMessage();
+          onKeyDown={(event) => {
+            event.key === "Enter" && send_message();
           }}
         />
-        <button onClick={sendMessage}>&#9658;</button>
+        <button onClick={send_message}>&#9658;</button>
       </div>
     </div>
   );
